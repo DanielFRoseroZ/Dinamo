@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'rest_framework',
     'corsheaders',
-    'dinamo_app',
+    'dinamo_app_gerente',
 ]
 
 MIDDLEWARE = [
