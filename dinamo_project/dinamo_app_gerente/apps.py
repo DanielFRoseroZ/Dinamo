@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class DinamoAppConfig(AppConfig):
-    name = 'dinamo_app'
+    name = 'dinamo_app_gerente'
