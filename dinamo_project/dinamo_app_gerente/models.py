@@ -30,7 +30,7 @@ class Proveedor(models.Model):
     telefono = models.CharField(max_length=50)
     correo = models.CharField(max_length=100)
     tipo_producto = models.CharField(max_length=50)
-    nomre_producto = models.CharField(max_length=100)
+    nombre_producto = models.CharField(max_length=100)
     
     def __str__(self):
         return self.nombre
@@ -50,7 +50,7 @@ class Usuario(models.Model):
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.nombre
+        return self.cedula
     
     class Meta:
         db_table = 'Usuario'
@@ -148,7 +148,6 @@ class RegistroTaller(models.Model):
         
     class Meta:
         db_table = 'RegistroTaller'
-    
 
         
 class Credito(models.Model):
