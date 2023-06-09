@@ -12,6 +12,11 @@ class SucursalViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = serializer.SucursalSerializer
 
+class EstadoViewSet(viewsets.ModelViewSet):
+    queryset = models.Estado.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = serializer.EstadoSerializer
+
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = models.Usuario.objects.all()
     permission_classes = [permissions.AllowAny]

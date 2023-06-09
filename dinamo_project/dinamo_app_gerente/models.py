@@ -38,15 +38,24 @@ class Proveedor(models.Model):
     class Meta:
         db_table = 'Proveedor'    
 
+class Estado(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+    
+    class Meta:
+        db_table = 'Estado'
+
 class Usuario(models.Model):
-    cedula = models.CharField(primary_key=True, max_length=50)
+    cedula = models.CharField('Cédula', primary_key=True, max_length=50)
     nombre = models.CharField(max_length=200)
-    correo = models.CharField(max_length=200)
-    telefono = models.CharField(max_length=200)
-    direccion = models.CharField(max_length=200)
-    contraseña = models.CharField(max_length=100)
-    estado = models.CharField(max_length=50)
-    id_rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
+    correo = models.CharField('Correo Eléctronico', max_length=200)
+    telefono = models.CharField('Teléfono', max_length=200)
+    direccion = models.CharField('Dirección', max_length=200)
+    password = models.CharField('Contraseña', max_length=100)
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
+    rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
     
     def __str__(self):
