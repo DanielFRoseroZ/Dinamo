@@ -89,7 +89,8 @@ class ProveedorViewSet(viewsets.ModelViewSet):
         if search_term:
             queryset = queryset.filter(
                 Q(nombre__icontains=search_term) |
-                Q(nombre__producto__icontains=search_term)
+                Q(tipo_producto__incontains=search_term) |
+                Q(nombre_producto__icontains=search_term)
             )
         return queryset
 
@@ -117,28 +118,113 @@ class RepuestoViewSet(viewsets.ModelViewSet):
     queryset = models.Repuesto.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = serializer.RepuestoSerializer
+    
+    #Funcion que recibe los parametros de una busqueda a traves de la URL y realiza la peticion correspondiente a la BD, para filtrar los datos y mostrarlos en pantalla 
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_term = self.request.query_params.get('search', '')
+        
+        if search_term:
+            queryset = queryset.filter(
+                Q(articulo__icontains=search_term) |
+                Q(sucursal__nombre__icontains=search_term) |
+                Q(proveedor__nombre__icontains=search_term)
+            )
+        return queryset
+
+
 
 class CitaViewSet(viewsets.ModelViewSet):
     queryset = models.Cita.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = serializer.CitaSerializer
 
+    #Funcion que recibe los parametros de una busqueda a traves de la URL y realiza la peticion correspondiente a la BD, para filtrar los datos y mostrarlos en pantalla 
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_term = self.request.query_params.get('search', '')
+        
+        if search_term:
+            queryset = queryset.filter(
+                Q(fecha__icontains=search_term) |
+                Q(nombre_empleado__icontains=search_term) |
+                Q(nombre_cliente__icontains=search_term)
+            )
+        return queryset
+
 class VentaViewSet(viewsets.ModelViewSet):
     queryset = models.Venta.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = serializer.VentaSerializer
+
+    #Funcion que recibe los parametros de una busqueda a traves de la URL y realiza la peticion correspondiente a la BD, para filtrar los datos y mostrarlos en pantalla 
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_term = self.request.query_params.get('search', '')
+        
+        if search_term:
+            queryset = queryset.filter(
+                Q(nombre_vendedor__icontains=search_term) |
+                Q(fecha_venta__icontains=search_term)
+            )
+        return queryset
 
 class PagoViewSet(viewsets.ModelViewSet):
     queryset = models.Pago.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = serializer.PagoSerializer
 
+    #Funcion que recibe los parametros de una busqueda a traves de la URL y realiza la peticion correspondiente a la BD, para filtrar los datos y mostrarlos en pantalla 
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_term = self.request.query_params.get('search', '')
+        
+        if search_term:
+            queryset = queryset.filter(
+                Q(cantidad_pago__icontains=search_term) |
+                Q(nombre_cliente__icontains=search_term) |
+                Q(id_venta__id__icontains=search_term)
+            )
+        return queryset
+
 class RegistroTallerViewSet(viewsets.ModelViewSet):
     queryset = models.RegistroTaller.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = serializer.RegistroTallerSerializer
 
+        #Funcion que recibe los parametros de una busqueda a traves de la URL y realiza la peticion correspondiente a la BD, para filtrar los datos y mostrarlos en pantalla 
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_term = self.request.query_params.get('search', '')
+        
+        if search_term:
+            queryset = queryset.filter(
+                Q(placa_auto__icontains=search_term) |
+                Q(estado__icontains=search_term) |
+                Q(fecha_ingreso__icontains=search_term)
+            )
+        return queryset
+
 class CreditoViewSet(viewsets.ModelViewSet):
     queryset = models.Credito.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = serializer.CreditoSerializer
+
+    #Funcion que recibe los parametros de una busqueda a traves de la URL y realiza la peticion correspondiente a la BD, para filtrar los datos y mostrarlos en pantalla 
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_term = self.request.query_params.get('search', '')
+        
+        if search_term:
+            queryset = queryset.filter(
+                Q(monto_pagado__icontains=search_term) |
+                Q(estado_pago__icontains=search_term) |
+                Q(cedula_cliente__nombre__icontains=search_term)
+            )
+        return queryset

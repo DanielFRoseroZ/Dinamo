@@ -13,6 +13,7 @@ router.register('admin/cita', api.CitaViewSet, 'admin_cita')
 router.register('admin/venta',api.VentaViewSet, 'admin_venta')
 router.register('admin/pago', api.PagoViewSet, 'admin_pago')
 router.register('admin/registaller', api.RegistroTallerViewSet, 'admin_registaller')
+router.register('admin/repuesto', api.RepuestoViewSet, 'admin_repuesto')
 router.register('admin/credito', api.CreditoViewSet, 'admin_credito')
 
 urlpatterns = router.urls
