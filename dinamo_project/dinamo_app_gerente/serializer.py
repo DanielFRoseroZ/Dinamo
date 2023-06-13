@@ -1,19 +1,27 @@
 from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
 from . import models
 
 class RolSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Rol
-        fields = ('id', 'nombre',)
-        read_only_fields = ('id',)
+        fields = '__all__'
     
 class SucursalSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Sucursal
-        fields = ('id', 'nombre', 'direccion', 'telefono', 'correo',)
-        read_only_fields = ('id',)
+        fields = '__all__'
+
+class EstadoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Estado
+        fields = '__all__'
 
 class UsuarioSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        validated_data['password'] = make_password(validated_data['password'])
+        return super().create(validated_data)
+
     class Meta:
         model = models.Usuario
         fields = '__all__'
