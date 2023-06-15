@@ -1,7 +1,8 @@
 from . import models
 from django.db.models import Q
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, generics
 from . import serializer
+import cloudinary.uploader
 
 class RolViewSet(viewsets.ModelViewSet):
     queryset = models.Rol.objects.all()
@@ -226,5 +227,25 @@ class CreditoViewSet(viewsets.ModelViewSet):
                 Q(monto_pagado__icontains=search_term) |
                 Q(estado_pago__icontains=search_term) |
                 Q(cedula_cliente__nombre__icontains=search_term)
+            )
+        return queryset
+    
+class ReporteViewSet(viewsets.ModelViewSet):
+    queryset = models.Reporte.objects.all()
+    serializer_class = serializer.ReporteSerializer
+
+    def pdf_create(self, serializer):
+        archivo_pdf = self.request.get['archivo_pdf']
+        upload_result = cloudinary.uploader.upload(archivo_pdf)
+        serializer.save(archivo_pdf=upload_result['url'])
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_term = self.request.query_params.get('search', '')
+        
+        if search_term:
+            queryset = queryset.filter(
+                Q(titulo__icontains=search_term) |
+                Q(rol__nombre__icontains=search_term)
             )
         return queryset

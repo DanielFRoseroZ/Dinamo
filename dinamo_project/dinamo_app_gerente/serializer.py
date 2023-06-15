@@ -65,3 +65,8 @@ class CreditoSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Credito
         fields = '__all__'
+
+class ReporteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Reporte
+        fields = '__all__'

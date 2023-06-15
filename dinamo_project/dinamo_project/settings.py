@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import cloudinary.api
+import cloudinary.uploader
 load_dotenv()   #Cargar variables de ambiente
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
