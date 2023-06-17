@@ -43,3 +43,45 @@
 .bg-landing{
     background-color: #19191f;
 }
+
+/* Estilo de centrado y ubicación de los títulos*/
+.estilo-title {
+    flex-direction: column;
+    justify-content: space-around;
+    display: flex;
+    text-align: center;
+    color: white;
+    font-size: 6rem;
+}
+
+.estilo-label {
+    flex-direction: column;
+    justify-content: space-around;
+    display: flex;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+}
+
+.estilo-input {
+    
+    justify-content: space-around;
+    display: flex;
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+ 
+}
+
+.estilo-button {
+    padding:6px;
+    border-radius:10px;
+    color:white;
+    text-align: center;
+    font-size: 1.5  rem;
+
+}
+
+.color-button{
+    background-color: mediumorchid;
+}
