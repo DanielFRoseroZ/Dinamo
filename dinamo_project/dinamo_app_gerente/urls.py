@@ -15,5 +15,6 @@ router.register('admin/pago', api.PagoViewSet, 'admin_pago')
 router.register('admin/registaller', api.RegistroTallerViewSet, 'admin_registaller')
 router.register('admin/repuesto', api.RepuestoViewSet, 'admin_repuesto')
 router.register('admin/credito', api.CreditoViewSet, 'admin_credito')
+router.register('admin/reporte', api.ReporteViewSet, 'admin_reporte')
 
 urlpatterns = router.urls

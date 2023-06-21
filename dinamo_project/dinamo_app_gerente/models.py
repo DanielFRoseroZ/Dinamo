@@ -174,3 +174,15 @@ class Credito(models.Model):
         
     class Meta:
         db_table = 'Credito'
+
+class Reporte(models.Model):
+    titulo = models.CharField(max_length=200, default='Reporte')
+    archivo_pdf = models.FileField(upload_to='reportes')
+    fecha_reporte = models.DateTimeField(auto_now_add=True)
+    rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.archivo_pdf
+    
+    class Meta:
+        db_table = 'Reporte'
