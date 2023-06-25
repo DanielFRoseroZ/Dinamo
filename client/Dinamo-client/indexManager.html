@@ -1,46 +1,25 @@
-<!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dinamo Concesionarios</title>
+    <title>Dinamo gerente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="resources/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.5.8/swiper-bundle.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
 </head>
 <body>
     <!--titulo: primera fila-->
     <div class="row text-center m-0 p-0 estilo-titulo">
         <div class="col-12 m-0 p-0">
-            <div class="row m-0 p-0 align-items-center justify-content-center">
+            <div class="row m-0 p-0 align-items-center justify-content-left">
                 <div class="col-2 m-0 p-0">
                     <img src="resources/Logo.png" title="" alt="" class="img-fluid w-100">
                 </div>
                 <div class="col-2 m-0 p-0">
-                    <a href ="busquedaVehiculos.html">
-                        <button type="button" class="btn btn-style-1">Busqueda de Vehículos</button>
-                    </a>
-                </div>
-                <div class="col-2 m-0 p-0">
-                    <a>
-                        <button type="button" class="btn btn-style-1">Revisión y Reparación</button>
-                    </a>
-                </div>
-                <div class="col-2 m-0 p-0">
-                    <a href ="quejas.html">
-                        <button type="button" class="btn btn-style-1">Quejas y Reclamos</button>
-                    </a>
-                </div>
-                <div class="col-2 m-0 p-0">
-                    <a href ="index.html">
-                        <button type="button" class="btn btn-style-1">Ingresar</button>
-                    </a>
-                </div>
-                <div class="col-2 m-0 p-0">
-                    <a>
+                    <a href ="ingresar.html">
                         <button type="button" class="btn btn-style-1">Registrarse</button>
                     </a>
                 </div>
@@ -172,3 +151,25 @@
     </script>
 </footer>
 </html>
+    <!-- Nota esto puede ser util para las barras de busqueda, va en body 
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Dinamo gerentes</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}-->
