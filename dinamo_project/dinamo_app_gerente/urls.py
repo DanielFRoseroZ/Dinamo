@@ -5,6 +5,7 @@ router = routers.DefaultRouter()
 
 router.register('admin/rol', api.RolViewSet, 'admin_rol')
 router.register('admin/sucursal', api.SucursalViewSet, 'admin_sucursal')
+router.register('admin/estado', api.EstadoViewSet, 'admin_estado')
 router.register('admin/usuario', api.UsuarioViewSet, 'admin_usuario')
 router.register('admin/proveedor', api.ProveedorViewSet, 'admin_proveedor')
 router.register('admin/auto', api.AutoViewSet, 'admin_auto')
