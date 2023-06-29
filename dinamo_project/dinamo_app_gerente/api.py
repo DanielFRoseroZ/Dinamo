@@ -1,8 +1,12 @@
 from . import models
 from django.db.models import Q
-from rest_framework import viewsets, permissions, generics
+from rest_framework import viewsets, permissions, status
+from rest_framework.response import Response
 from . import serializer
 import cloudinary.uploader
+from django.contrib.auth import authenticate, login
+from rest_framework.decorators import action
+from .models import Usuario
 
 class RolViewSet(viewsets.ModelViewSet):
     queryset = models.Rol.objects.all()
@@ -59,7 +63,6 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     serializer_class = serializer.UsuarioSerializer
 
     #Funcion que recibe los parametros de una busqueda a traves de la URL y realiza la peticion correspondiente a la BD, para filtrar los datos y mostrarlos en pantalla 
-
     def get_queryset(self):
         queryset = super().get_queryset()
         search_term = self.request.query_params.get('search', '')
@@ -75,7 +78,23 @@ class UsuarioViewSet(viewsets.ModelViewSet):
                 Q(rol__nombre__icontains=search_term)
             )
         return queryset
+    
+    @action(detail=False, methods=['POST'], url_path='login_xd')
+    def login(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
 
+        user = authenticate(username=username, password=password)
+        
+
+        # if user != None:
+        #     login(request, user)
+        #     return Response({'message': 'Inicio de sesión exitoso'}, status=status.HTTP_200_OK)
+        # else:
+        #     return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
+        print(username, password, user)
+        return Response({'message': 'Inicio de sesión exitoso'}, status=status.HTTP_200_OK)
+    
 class ProveedorViewSet(viewsets.ModelViewSet):
     queryset = models.Proveedor.objects.all()
     permission_classes = [permissions.AllowAny]
@@ -111,7 +130,7 @@ class AutoViewSet(viewsets.ModelViewSet):
                 Q(modelo__icontains=search_term) |
                 Q(año__icontains=search_term) |
                 Q(color__icontains=search_term) |
-                Q(precio_icontains=search_term)
+                Q(precio__icontains=search_term)
             )
         return queryset
 
@@ -133,7 +152,6 @@ class RepuestoViewSet(viewsets.ModelViewSet):
                 Q(proveedor__nombre__icontains=search_term)
             )
         return queryset
-
 
 
 class CitaViewSet(viewsets.ModelViewSet):
