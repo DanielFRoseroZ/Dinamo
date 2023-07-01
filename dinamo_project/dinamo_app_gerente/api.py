@@ -78,19 +78,6 @@ class UsuarioViewSet(viewsets.ModelViewSet):
                 Q(rol__nombre__icontains=search_term)
             )
         return queryset
-    
-    @action(detail=False, methods=['POST'], url_path='login_xd')
-    def login(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-
-        user = authenticate(username=username, password=password)
-        
-        if user != None:
-            login(request, user)
-            return Response({'message': 'Inicio de sesión exitoso'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
         
     
 class ProveedorViewSet(viewsets.ModelViewSet):

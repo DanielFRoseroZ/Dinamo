@@ -60,7 +60,7 @@ class Usuario(models.Model):
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.cedula
+        return self.rol.nombre
     
     class Meta:
         db_table = 'Usuario'
