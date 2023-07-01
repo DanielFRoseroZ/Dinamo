@@ -1,6 +1,7 @@
 from django.db import models
 import cloudinary
 from cloudinary.models import CloudinaryField
+from .validators import validate_file_extension
 
 # Create your models here.
 class Rol(models.Model):
@@ -177,7 +178,7 @@ class Credito(models.Model):
 
 class Reporte(models.Model):
     titulo = models.CharField(max_length=200, default='Reporte')
-    archivo_pdf = models.FileField(upload_to='reportes')
+    archivo_pdf = models.FileField(upload_to='reportes', validators=[validate_file_extension])
     fecha_reporte = models.DateTimeField(auto_now_add=True)
     rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
 

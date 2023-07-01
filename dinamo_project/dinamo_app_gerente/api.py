@@ -92,8 +92,6 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         else:
             return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
         
-        # print(username, password, user)
-        # return Response({'message': 'Inicio de sesión exitoso'}, status=status.HTTP_200_OK)
     
 class ProveedorViewSet(viewsets.ModelViewSet):
     queryset = models.Proveedor.objects.all()
@@ -256,7 +254,7 @@ class ReporteViewSet(viewsets.ModelViewSet):
         archivo_pdf = self.request.get['archivo_pdf']
         upload_result = cloudinary.uploader.upload(archivo_pdf)
         serializer.save(archivo_pdf=upload_result['url'])
-
+        
     def get_queryset(self):
         queryset = super().get_queryset()
         search_term = self.request.query_params.get('search', '')
