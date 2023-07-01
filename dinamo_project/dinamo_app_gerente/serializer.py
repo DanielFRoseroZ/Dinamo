@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from . import models
-
+from django.contrib.auth.models import User
 
 class RolSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,7 +20,10 @@ class EstadoSerializer(serializers.ModelSerializer):
 
 class UsuarioSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
+        user = User.objects.create_user(username=validated_data['username'])
         validated_data['password'] = make_password(validated_data['password'])
+        user.password = validated_data['password'] 
+        user.save()
         return super().create(validated_data)
 
     class Meta:

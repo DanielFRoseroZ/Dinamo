@@ -86,14 +86,14 @@ class UsuarioViewSet(viewsets.ModelViewSet):
 
         user = authenticate(username=username, password=password)
         
-
-        # if user != None:
-        #     login(request, user)
-        #     return Response({'message': 'Inicio de sesión exitoso'}, status=status.HTTP_200_OK)
-        # else:
-        #     return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
-        print(username, password, user)
-        return Response({'message': 'Inicio de sesión exitoso'}, status=status.HTTP_200_OK)
+        if user != None:
+            login(request, user)
+            return Response({'message': 'Inicio de sesión exitoso'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        # print(username, password, user)
+        # return Response({'message': 'Inicio de sesión exitoso'}, status=status.HTTP_200_OK)
     
 class ProveedorViewSet(viewsets.ModelViewSet):
     queryset = models.Proveedor.objects.all()
