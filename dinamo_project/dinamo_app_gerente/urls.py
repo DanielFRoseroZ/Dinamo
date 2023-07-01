@@ -16,6 +16,5 @@ router.register(r'registaller', api.RegistroTallerViewSet, basename='admin_regis
 router.register(r'repuesto', api.RepuestoViewSet, basename='admin_repuesto')
 router.register(r'credito', api.CreditoViewSet, basename='admin_credito')
 router.register(r'reporte', api.ReporteViewSet, basename='admin_reporte')
-router.register(r'login', api.UsuarioViewSet, basename='login')
 
 urlpatterns = router.urls
