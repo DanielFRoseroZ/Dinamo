@@ -3,6 +3,8 @@ from django.contrib.auth.hashers import make_password
 from . import models
 from django.contrib.auth.models import User
 
+#Configuración de los serializadores para los datos de la base de datos -> Se serializan los datos para que se puedan enviar en formato JSON
+
 class RolSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Rol
@@ -19,6 +21,7 @@ class EstadoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class UsuarioSerializer(serializers.ModelSerializer):
+    #Se crea el usuario con el username y el password en la tabla de user de django, para poder utilizar el login y autenticación de django
     def create(self, validated_data):
         user = User.objects.create_user(username=validated_data['username'])
         validated_data['password'] = make_password(validated_data['password'])

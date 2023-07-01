@@ -4,14 +4,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 import jwt
+
+#Obtain Token es la funcion a la que llama la url /login para obtener un token.
 class ObtainToken(TokenObtainPairView):
     serializer_class = Serializador_token
 SECRET_KEY = 'django-insecure-x9++46qu%ln3u4mfgo!36q4*#1-#8lqg2g8^gu@r_5+4##3yt='
-'''
-Check Token es la funcion a la que llama la url /checkToken para revisar un token esta valido.
-En request, se espera que se mande un acces token.
-Si se quiere acceder a payload, solo revisar payload, que recibe el valor de jwt.decode
-'''
+
+#Check Token es la funcion a la que llama la url /checkToken para revisar un token esta valido.
+
 class CheckToken(APIView):
     def post (self,request):
         print(request)

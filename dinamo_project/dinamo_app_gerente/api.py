@@ -8,11 +8,14 @@ from django.contrib.auth import authenticate, login
 from rest_framework.decorators import action
 from .models import Usuario
 
+#Configuración de los viewsets para los datos de la base de datos -> Se obtienen los datos de la base de datos y se envian en formato JSON
+
 class RolViewSet(viewsets.ModelViewSet):
     queryset = models.Rol.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = serializer.RolSerializer
 
+    #Función que recibe los parametros de una busqueda a traves de la URL y realiza la peticion correspondiente a la BD, para filtrar los datos y mostrarlos en pantalla
     def get_queryset(self):
         queryset = super().get_queryset()
         search_term = self.request.query_params.get('search', '')
