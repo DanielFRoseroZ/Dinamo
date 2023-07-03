@@ -1,20 +1,23 @@
 from rest_framework import routers
 from . import api
 
+# Routers provee una forma simple de direccionar las peticiones a diferentes vistas basadas en el método de la petición (GET, POST, PUT, DELETE).
 router = routers.DefaultRouter()
 
-router.register('admin/rol', api.RolViewSet, 'admin_rol')
-router.register('admin/sucursal', api.SucursalViewSet, 'admin_sucursal')
-router.register('admin/estado', api.EstadoViewSet, 'admin_estado')
-router.register('admin/usuario', api.UsuarioViewSet, 'admin_usuario')
-router.register('admin/proveedor', api.ProveedorViewSet, 'admin_proveedor')
-router.register('admin/auto', api.AutoViewSet, 'admin_auto')
-router.register('admin/cita', api.CitaViewSet, 'admin_cita')
-router.register('admin/venta',api.VentaViewSet, 'admin_venta')
-router.register('admin/pago', api.PagoViewSet, 'admin_pago')
-router.register('admin/registaller', api.RegistroTallerViewSet, 'admin_registaller')
-router.register('admin/repuesto', api.RepuestoViewSet, 'admin_repuesto')
-router.register('admin/credito', api.CreditoViewSet, 'admin_credito')
-router.register('admin/reporte', api.ReporteViewSet, 'admin_reporte')
+#Se registran las vistas de la app
+router.register(r'rol', api.RolViewSet, basename='admin_rol')
+router.register(r'sucursal', api.SucursalViewSet, basename='admin_sucursal')
+router.register(r'estado', api.EstadoViewSet, basename='admin_estado')
+router.register(r'usuario', api.UsuarioViewSet, basename='admin_usuario')
+router.register(r'proveedor', api.ProveedorViewSet, basename='admin_proveedor')
+router.register(r'auto', api.AutoViewSet, basename='admin_auto')
+router.register(r'cita', api.CitaViewSet, basename='admin_cita')
+router.register(r'venta',api.VentaViewSet, basename='admin_venta')
+router.register(r'pago', api.PagoViewSet, basename='admin_pago')
+router.register(r'registaller', api.RegistroTallerViewSet, basename='admin_registaller')
+router.register(r'repuesto', api.RepuestoViewSet, basename='admin_repuesto')
+router.register(r'credito', api.CreditoViewSet, basename='admin_credito')
+router.register(r'reporte', api.ReporteViewSet, basename='admin_reporte')
 
+#Se asignan las urls de la app
 urlpatterns = router.urls

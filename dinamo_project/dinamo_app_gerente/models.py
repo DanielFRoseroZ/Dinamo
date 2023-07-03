@@ -1,8 +1,11 @@
 from django.db import models
 import cloudinary
 from cloudinary.models import CloudinaryField
+from .validators import validate_file_extension, validate_numeric
 
 # Create your models here.
+
+#Modelo de la tabla Rol
 class Rol(models.Model):
     nombre = models.CharField(max_length=50)
     
@@ -12,7 +15,7 @@ class Rol(models.Model):
     class Meta:
         db_table = 'Rol' 
     
-
+#Modelo de la tabla Sucursal
 class Sucursal(models.Model):
     nombre = models.CharField(max_length=200)
     direccion = models.CharField(max_length=200)
@@ -25,6 +28,7 @@ class Sucursal(models.Model):
     class Meta:
         db_table = 'Sucursal'
         
+#Modelo de la tabla Proveedor
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=100)
     telefono = models.CharField(max_length=50)
@@ -47,10 +51,11 @@ class Estado(models.Model):
     class Meta:
         db_table = 'Estado'
 
+#Modelo de la tabla Usuario
 class Usuario(models.Model):
-    cedula = models.CharField('Cédula', primary_key=True, max_length=50)
+    cedula = models.CharField('Cédula', primary_key=True, max_length=50, validators=[validate_numeric])
     nombre = models.CharField(max_length=200)
-    correo = models.CharField('Correo Eléctronico', max_length=200)
+    username = models.CharField('Correo Eléctronico', max_length=200, unique=True)
     telefono = models.CharField('Teléfono', max_length=200)
     direccion = models.CharField('Dirección', max_length=200)
     password = models.CharField('Contraseña', max_length=100)
@@ -59,11 +64,12 @@ class Usuario(models.Model):
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.cedula
+        return self.rol.nombre
     
     class Meta:
         db_table = 'Usuario'
-        
+
+#Modelo de la tabla Cliente
 class Auto(models.Model):
     modelo = models.CharField(max_length=200)
     color = models.CharField(max_length=50)
@@ -81,7 +87,8 @@ class Auto(models.Model):
     
     class Meta:
         db_table = 'Auto'
-        
+
+#Modelo de la tabla Repuesto
 class Repuesto(models.Model):
     articulo = models.CharField(max_length=100)
     cantidad = models.IntegerField(default=0)
@@ -97,6 +104,7 @@ class Repuesto(models.Model):
     class Meta:
         db_table = 'Repuesto'
 
+#Modelo de la tabla Cita
 class Cita(models.Model):
     fecha = models.CharField(max_length=200)
     nombre_empleado = models.CharField(max_length=100)
@@ -111,6 +119,7 @@ class Cita(models.Model):
     class Meta:
         db_table = 'Cita'
     
+#Modelo de la tabla Venta
 class Venta(models.Model):
     precio = models.IntegerField(default=0)
     nombre_vendedor = models.CharField(max_length=100)
@@ -125,7 +134,8 @@ class Venta(models.Model):
         
     class Meta:
         db_table = 'Venta'    
-    
+
+#Modelo de la tabla Pago
 class Pago(models.Model):
     tipo_pago = models.CharField(max_length=100)
     cantidad_pago = models.IntegerField(default=0)
@@ -140,6 +150,7 @@ class Pago(models.Model):
     class Meta:
         db_table = 'Pago'
 
+#Modelo de la tabla RegistroTaller
 class RegistroTaller(models.Model):
     placa_auto = models.CharField(max_length=50)
     modelo = models.CharField(max_length=100)
@@ -158,7 +169,7 @@ class RegistroTaller(models.Model):
     class Meta:
         db_table = 'RegistroTaller'
 
-        
+#Modelo de la tabla Credito
 class Credito(models.Model):
     monto_pagado = models.IntegerField(default=0)
     intereses = models.DecimalField(decimal_places=2, max_digits=3)
@@ -175,9 +186,10 @@ class Credito(models.Model):
     class Meta:
         db_table = 'Credito'
 
+#Modelo de la tabla Reporte
 class Reporte(models.Model):
     titulo = models.CharField(max_length=200, default='Reporte')
-    archivo_pdf = models.FileField(upload_to='reportes')
+    archivo_pdf = models.FileField(upload_to='reportes', validators=[validate_file_extension])
     fecha_reporte = models.DateTimeField(auto_now_add=True)
     rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
 
