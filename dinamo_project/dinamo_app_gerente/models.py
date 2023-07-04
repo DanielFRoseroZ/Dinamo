@@ -50,7 +50,7 @@ class Estado(models.Model):
 class Usuario(models.Model):
     cedula = models.CharField('Cédula', primary_key=True, max_length=50)
     nombre = models.CharField(max_length=200)
-    correo = models.CharField('Correo Eléctronico', max_length=200)
+    username = models.CharField('Correo Eléctronico', max_length=200)
     telefono = models.CharField('Teléfono', max_length=200)
     direccion = models.CharField('Dirección', max_length=200)
     password = models.CharField('Contraseña', max_length=100)
