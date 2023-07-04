@@ -37,22 +37,33 @@
                     <label for="placa">Placa</label>
                     <input type="text" id="placa" name="placa" required
                     minlength="5" maxlength="6" size="30">
-                    <label for="estado">Estado</label>
-                    <select name="select" required >
-                            <option value="value1">Listo</option>
-                            <option value="value2">En reparación</option>
-                    </select>
-                    <label for="repuestos">Repuestos requeridos</label>
-                    <input type="text" id="repuestos" name="repuestos" 
-                    size="30" readonly>
+                    
+                    
+                   
                     <label for="labour">Mano de obra</label>
                     <input type="text" id="labour" name="labour" 
                     size="30" readonly>
                     <label for="totalToPay">Valor a pagar</label>
                     <input type="text" id="totalToPay" name="totalToPay" 
-                    size="30" >
+                    size="30" readonly>
+
                     
+                    <fieldset class="text-left estilo-dinamo-3 text-left my-1">
+                        <legend  >Repuestos requeridos:</legend>
+                        <label for="Repuesto1">Repuesto1</label>
+                        <label for="Repuesto2">Repuesto2</label>
+                        <label for="Repuesto3">Repuesto3</label>
+                        </fieldset>
                 </p>
+                <div class="row m-10 p-10">
+
+                    <label class="estilo-dinamo-4" for="estado">Estado</label>
+                    <select class="estilo-dinamo-10" name="select" required >
+                        <option value="value1">Seleccione</option>
+                        <option value="value2">Listo</option>
+                        <option value="value3">En reparación</option>
+                    </select>
+                </div>  
             </div>
             
         </div>
