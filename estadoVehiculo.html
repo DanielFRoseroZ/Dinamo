@@ -1,0 +1,82 @@
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado del vehículo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="resources/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.5.8/swiper-bundle.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body style="background-color:#19191f">
+    
+    <div class="row text-center m-0 p-0 estilo-titulo">
+        <div class="col-12 m-0 p-0">
+            <div class="row m-0 p-0 align-items-left justify-content-left">
+                <div class="col-2 m-0 p-0">
+                    <img src="resources/Logo.png" title="" alt="" class="img-fluid w-100">
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="row m-0 p-0 bg-landing justify-content-center">
+        <div class="col-12 m-0 p-0 estilo-1">
+            <div class="row m-0 p-0">
+                <p class="text-center estilo-dinamo-3 text-center my-4">
+                    <strong>Estado del vehículo</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row m-10 p-10 bg-landing justify-content-center">
+        <div class="col-2 m-0 p-0 estilo-1">
+            <div class="row m-10 p-10">
+                <p class="text-left estilo-dinamo-3 text-left my-1">
+                    <label for="placa">Placa</label>
+                    <input type="text" id="placa" name="placa" required
+                    minlength="5" maxlength="6" size="30">
+                    <label for="estado">Estado</label>
+                    <select name="select" required >
+                            <option value="value1">Listo</option>
+                            <option value="value2">En reparación</option>
+                    </select>
+                    <label for="repuestos">Repuestos requeridos</label>
+                    <input type="text" id="repuestos" name="repuestos" 
+                    size="30" readonly>
+                    <label for="labour">Mano de obra</label>
+                    <input type="text" id="labour" name="labour" 
+                    size="30" readonly>
+                    <label for="totalToPay">Valor a pagar</label>
+                    <input type="text" id="totalToPay" name="totalToPay" 
+                    size="30" >
+                    
+                </p>
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="row text-center m-0 p-0 estilo-titulo">
+        <div class="col-12 m-10 p-10">
+            <div class="row m-0 p-0 align-items-center justify-content-center">
+                <p>
+                <div class="col-1 m-0 p-0">
+                    <a href ="index.html">
+                        <button type="button" class="btn btn-style-1">Atras</button>
+                    </a>
+                </div>
+                <div class="col-1 m-0 p-0">
+                    <button type="button" class="btn btn-style-1">Buscar</button>
+                </div>
+            </p>
+            </div>
+        </div>  
+    </div>
+
+    
+</body> <footer>
+</footer>
+</html>
