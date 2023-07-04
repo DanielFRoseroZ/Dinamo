@@ -4,9 +4,7 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from . import serializer
 import cloudinary.uploader
-from django.contrib.auth import authenticate, login
-from rest_framework.decorators import action
-from .models import Usuario
+
 
 #Configuración de los viewsets para los datos de la base de datos -> Se obtienen los datos de la base de datos y se envian en formato JSON
 

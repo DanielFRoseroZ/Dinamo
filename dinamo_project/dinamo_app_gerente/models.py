@@ -1,13 +1,13 @@
 from django.db import models
 import cloudinary
 from cloudinary.models import CloudinaryField
-from .validators import validate_file_extension, validate_numeric
+from .validators import validate_file_extension, validate_numeric, validate_email, validate_str, validate_file_extension_imgs, validate_fecha_format
 
 # Create your models here.
 
 #Modelo de la tabla Rol
 class Rol(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50, unique=True, validators=[validate_str])
     
     def __str__(self):
         return self.nombre
@@ -19,8 +19,8 @@ class Rol(models.Model):
 class Sucursal(models.Model):
     nombre = models.CharField(max_length=200)
     direccion = models.CharField(max_length=200)
-    telefono = models.CharField(max_length=50)
-    correo = models.CharField(max_length=200)
+    telefono = models.CharField(max_length=50, validators=[validate_numeric])
+    correo = models.CharField(max_length=200, validators=[validate_email])
     
     def __str__(self):
         return self.nombre
@@ -30,9 +30,9 @@ class Sucursal(models.Model):
         
 #Modelo de la tabla Proveedor
 class Proveedor(models.Model):
-    nombre = models.CharField(max_length=100)
-    telefono = models.CharField(max_length=50)
-    correo = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100, validators=[validate_str])
+    telefono = models.CharField(max_length=50, validators=[validate_numeric])
+    correo = models.CharField(max_length=100, validators=[validate_email])
     tipo_producto = models.CharField(max_length=50)
     nombre_producto = models.CharField(max_length=100)
     
@@ -54,9 +54,9 @@ class Estado(models.Model):
 #Modelo de la tabla Usuario
 class Usuario(models.Model):
     cedula = models.CharField('Cédula', primary_key=True, max_length=50, validators=[validate_numeric])
-    nombre = models.CharField(max_length=200)
-    username = models.CharField('Correo Eléctronico', max_length=200, unique=True)
-    telefono = models.CharField('Teléfono', max_length=200)
+    nombre = models.CharField(max_length=200, validators=[validate_str])
+    username = models.CharField('Correo Eléctronico', max_length=200, unique=True, validators=[validate_email])
+    telefono = models.CharField('Teléfono', max_length=200, validators=[validate_numeric])
     direccion = models.CharField('Dirección', max_length=200)
     password = models.CharField('Contraseña', max_length=100)
     estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
@@ -64,7 +64,7 @@ class Usuario(models.Model):
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.rol.nombre
+        return self.cedula
     
     class Meta:
         db_table = 'Usuario'
@@ -72,12 +72,12 @@ class Usuario(models.Model):
 #Modelo de la tabla Cliente
 class Auto(models.Model):
     modelo = models.CharField(max_length=200)
-    color = models.CharField(max_length=50)
-    foto = cloudinary.models.CloudinaryField(folder='media/auto_images/', overwrite=True, resource_type='', blank=True)
+    color = models.CharField(max_length=50, validators=[validate_str])
+    foto = cloudinary.models.CloudinaryField(folder='media/auto_images/', overwrite=True, resource_type='', blank=True, validators=[validate_file_extension_imgs])
     precio = models.IntegerField(default=0)
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
     stock = models.IntegerField(default=0)
-    año = models.CharField(max_length=10)
+    año = models.CharField(max_length=10, validators=[validate_numeric])
     caracteristicas = models.CharField(max_length=300)
     kilometraje = models.IntegerField(default=0)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
@@ -106,10 +106,10 @@ class Repuesto(models.Model):
 
 #Modelo de la tabla Cita
 class Cita(models.Model):
-    fecha = models.CharField(max_length=200)
-    nombre_empleado = models.CharField(max_length=100)
+    fecha = models.CharField(max_length=10, validators=[validate_fecha_format])
+    nombre_empleado = models.CharField(max_length=100, validators=[validate_str])
     cedula_empleado = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='cedula_empleado')
-    nombre_cliente = models.CharField(max_length=100)
+    nombre_cliente = models.CharField(max_length=100, validators=[validate_str])
     cedula_cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='cedula_cliente')
     descripcion = models.CharField(max_length=400)
     
@@ -122,11 +122,11 @@ class Cita(models.Model):
 #Modelo de la tabla Venta
 class Venta(models.Model):
     precio = models.IntegerField(default=0)
-    nombre_vendedor = models.CharField(max_length=100)
+    nombre_vendedor = models.CharField(max_length=100, validators=[validate_str])
     cedula_vendedor = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    fecha_venta = models.CharField(max_length=100)
+    fecha_venta = models.CharField(max_length=100, validators=[validate_fecha_format])
     comentario = models.CharField(max_length=200)
-    metodo_pago = models.CharField(max_length=50)
+    metodo_pago = models.CharField(max_length=50, validators=[validate_str])
     id_auto = models.ForeignKey(Auto, on_delete=models.CASCADE)
     
     def __str__(self):
@@ -137,11 +137,11 @@ class Venta(models.Model):
 
 #Modelo de la tabla Pago
 class Pago(models.Model):
-    tipo_pago = models.CharField(max_length=100)
+    tipo_pago = models.CharField(max_length=100, validators=[validate_str])
     cantidad_pago = models.IntegerField(default=0)
-    nombre_cliente = models.CharField(max_length=200)
+    nombre_cliente = models.CharField(max_length=200, validators=[validate_str])
     cedula_cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    meotodo_pago = models.CharField(max_length=100)
+    meotodo_pago = models.CharField(max_length=100, validators=[validate_str])
     id_venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
     
     def __str__(self):
@@ -154,13 +154,13 @@ class Pago(models.Model):
 class RegistroTaller(models.Model):
     placa_auto = models.CharField(max_length=50)
     modelo = models.CharField(max_length=100)
-    estado = models.CharField(max_length=50)
-    comentario = models.CharField(max_length=200)
-    fecha_ingreso = models.CharField(max_length=100)
-    fecha_entregado = models.CharField(max_length=100)
+    estado = models.CharField(max_length=50, validators=[validate_str])
+    comentario = models.CharField(max_length=200,)
+    fecha_ingreso = models.CharField(max_length=100, validators=[validate_fecha_format])
+    fecha_entregado = models.CharField(max_length=100, validators=[validate_fecha_format])
     costo_reparacion = models.IntegerField(default=0)
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
-    mecanico_encargado = models.CharField(max_length=100)
+    mecanico_encargado = models.CharField(max_length=100, validators=[validate_str])
     cedula_mecanico = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     
     def __str__(self):
@@ -173,15 +173,15 @@ class RegistroTaller(models.Model):
 class Credito(models.Model):
     monto_pagado = models.IntegerField(default=0)
     intereses = models.DecimalField(decimal_places=2, max_digits=3)
-    fecha_inicio_cuotas = models.CharField(max_length=50)
-    fecha_fin_cuotas = models.CharField(max_length=50)
-    estado_pago = models.CharField(max_length=50)
+    fecha_inicio_cuotas = models.CharField(max_length=10, validators=[validate_fecha_format])
+    fecha_fin_cuotas = models.CharField(max_length=10, validators=[validate_fecha_format])
+    estado_pago = models.CharField(max_length=50, validators=[validate_str])
     monto_restante = models.IntegerField(default=0)
     id_venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
-    cedula_cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.cedula_cliente
+        return self.cliente
         
     class Meta:
         db_table = 'Credito'
