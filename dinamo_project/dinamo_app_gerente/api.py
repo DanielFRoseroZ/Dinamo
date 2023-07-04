@@ -255,3 +255,17 @@ class ReporteViewSet(viewsets.ModelViewSet):
                 Q(rol__nombre__icontains=search_term)
             )
         return queryset
+    
+class QuejaViewSet(viewsets.ModelViewSet):
+    queryset = models.Queja.objects.all()
+    serializer_class = serializer.QuejaSerializer
+
+    def get_querySet(self):
+        queryset = super().get_queryset()
+        search_term = self.request.query_params.get('search', '')
+        
+        if search_term:
+            queryset = queryset.filter(
+                Q(asunto__icontains=search_term) 
+            )
+        return queryset

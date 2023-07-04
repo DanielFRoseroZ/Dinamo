@@ -77,3 +77,8 @@ class ReporteSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Reporte
         fields = '__all__'
+
+class QuejaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Queja
+        fields = '__all__'

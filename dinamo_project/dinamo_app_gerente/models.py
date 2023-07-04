@@ -198,3 +198,16 @@ class Reporte(models.Model):
     
     class Meta:
         db_table = 'Reporte'
+
+#Modelo de la tabla Quejas 
+class Queja(models.Model):
+    cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    asunto = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=300)
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.asunto
+    
+    class Meta:
+        db_table = 'Quejas' 
