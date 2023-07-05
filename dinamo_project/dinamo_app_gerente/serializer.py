@@ -82,3 +82,18 @@ class QuejaSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Queja
         fields = '__all__'
+
+class AutoTallerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.AutoTaller
+        fields = '__all__'
+
+class OrdenTrabajoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.OrdenTrabajo
+        fields = '__all__'
+
+class CotizacionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Cotizacion
+        fields = '__all__'

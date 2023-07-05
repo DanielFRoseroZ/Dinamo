@@ -105,6 +105,11 @@ class AutoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = serializer.AutoSerializer
 
+    def foto_upload(self, serializer):
+        foto = self.request.get['archivo_pdf']
+        upload_result = cloudinary.uploader.upload(foto)
+        serializer.save(foto=upload_result['url'])
+
     #Funcion que recibe los parametros de una busqueda a traves de la URL y realiza la peticion correspondiente a la BD, para filtrar los datos y mostrarlos en pantalla 
 
     def get_queryset(self):
@@ -265,5 +270,49 @@ class QuejaViewSet(viewsets.ModelViewSet):
         if search_term:
             queryset = queryset.filter(
                 Q(asunto__icontains=search_term) 
+            )
+        return queryset
+
+class AutoTallerViewSet(viewsets.ModelViewSet):
+    queryset = models.AutoTaller.objects.all()
+    serializer_class = serializer.AutoTallerSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_term = self.request.query_params.get('search', '')
+
+        if search_term:
+            queryset = queryset.filter(
+                Q(placa__icontains=search_term)
+            )
+        return queryset
+    
+class OrdenTrabajoViewSet(viewsets.ModelViewSet):
+    queryset = models.OrdenTrabajo.objects.all()
+    serializer_class = serializer.OrdenTrabajoSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_term = self.request.query_params.get('search', '')
+
+        if search_term:
+            queryset = queryset.filter(
+                Q(fecha__icontains=search_term) |
+                Q(auto__placa__icontains=search_term)
+            )
+        return queryset
+
+class CotizacionViewSet(viewsets.ModelViewSet):
+    queryset = models.Cotizacion.objects.all()
+    serializer_class = serializer.CotizacionSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_term = self.request.query_params.get('search', '')
+
+        if search_term:
+            queryset = queryset.filter(
+                Q(fecha__icontains=search_term) |
+                Q(auto__placa__icontains=search_term)
             )
         return queryset

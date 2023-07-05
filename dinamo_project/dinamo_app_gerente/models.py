@@ -73,7 +73,7 @@ class Usuario(models.Model):
 class Auto(models.Model):
     modelo = models.CharField(max_length=200)
     color = models.CharField(max_length=50, validators=[validate_str])
-    foto = cloudinary.models.CloudinaryField(folder='media/auto_images/', overwrite=True, resource_type='', blank=True, validators=[validate_file_extension_imgs])
+    foto = models.FileField(upload_to='fotos_autos', validators=[validate_file_extension_imgs])
     precio = models.IntegerField(default=0)
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
     stock = models.IntegerField(default=0)
@@ -211,3 +211,52 @@ class Queja(models.Model):
     
     class Meta:
         db_table = 'Quejas' 
+
+#Modelo de la tabla AutoTaller - para registrar los autos que ingresan al taller por reparacion
+class AutoTaller(models.Model):
+    marca = models.CharField(max_length=50)
+    modelo = models.CharField(max_length=50)
+    año = models.PositiveBigIntegerField(default=0)
+    placa = models.CharField(max_length=50, unique=True)
+    cliente = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    fecha_ingreso = models.CharField(max_length=10, validators=[validate_fecha_format])
+
+    def __str__(self):
+        return self.placa
+    
+    class Meta:
+        db_table = 'AutoTaller'
+
+#Modelo de la tabla Cotizacion - para registrar la cotizacion inicial realizada a un auto ingresado por reparacion
+class Cotizacion(models.Model):
+    fecha = models.CharField(max_length=10, validators=[validate_fecha_format])
+    descripcion = models.TextField()
+    costo_cotizacion = models.DecimalField(max_digits=10, decimal_places=2)
+    auto = models.ForeignKey(AutoTaller, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Auto: {self.auto}'
+    
+    class Meta:
+        db_table = 'Cotizacion'
+
+#Modelo de la tabla OrdenTrabajo - para registrar las ordenes de trabajo asociadas a los autos ingresados para reparacion
+class OrdenTrabajo(models.Model):
+    ESTADO_CHOICES = (
+        ('pendiente', 'Pendiente'),
+        ('en proceso', 'En proceso'),
+        ('finalizado', 'Finalizado'),
+    )
+
+    auto = models.ForeignKey(AutoTaller, on_delete=models.CASCADE)
+    fecha = models.CharField(max_length=10, validators=[validate_fecha_format])
+    cotizacion = models.ForeignKey(Cotizacion, on_delete=models.CASCADE,default= None)
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='pendiente')
+    descripcion = models.TextField()
+    costo_total = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.auto
+
+    class Meta:
+        db_table = 'OrdenTrabajo'

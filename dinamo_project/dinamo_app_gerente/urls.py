@@ -19,6 +19,9 @@ router.register(r'repuesto', api.RepuestoViewSet, basename='admin_repuesto')
 router.register(r'credito', api.CreditoViewSet, basename='admin_credito')
 router.register(r'reporte', api.ReporteViewSet, basename='admin_reporte')
 router.register(r'queja', api.QuejaViewSet, basename='admin_queja')
+router.register(r'autotaller', api.AutoTallerViewSet, basename='admin_autotaller')
+router.register(r'ordentrabajo', api.OrdenTrabajoViewSet, basename='orden_trabajotaller')
+router.register(r'cotizacion', api.CotizacionViewSet, basename='cotizacion_taller')
 
 #Se asignan las urls de la app
 urlpatterns = router.urls
