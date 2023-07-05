@@ -1,0 +1,145 @@
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quejas y Reclamos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="resources/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.5.8/swiper-bundle.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body style="background-color:#19191f">
+    
+    <div class="row text-center m-0 p-0 estilo-titulo">
+        <div class="col-12 m-0 p-0">
+            <div class="row m-0 p-0 align-items-center justify-content-left">
+                <div class="col-md-2 col-12 m-0 p-0">
+                    <img src="resources/Logo.png" title="" alt="" class="img-fluid w-100">
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="row m-0 p-0 bg-landing justify-content-center">
+        <div class="col-12 m-0 p-0 estilo-1">
+            <div class="row m-0 p-0">
+                <p class="text-center estilo-dinamo-3 text-center my-4">
+                    <strong> Quejas y Reclamos</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row m-0 p-0 bg-landing justify-content-center">
+        <div class="col-md-3 col-12 m-0 p-0 estilo-1">
+            <div class="row m-0 p-0">
+                <div class="col-12 m-0 p-0">
+                    <p class="text-left estilo-dinamo-3 text-left my-5">
+                        <label for="subject">Asunto:</label>
+                        <input type="text" id="asunto" subject="subject" required
+                        minlength="5" maxlength="60" size="60">
+                        <label for="subject">ID o CC:</label>
+                        <input type="text" placeholder="Ingrese su ID o Cedula registrada" id="id" subject="subject" required
+                        minlength="5" maxlength="60" size="60">
+                        <label for="desc">Descripcion:</label>
+                        <div class="row m-0 p-0">
+                            <div class="col-12 m-0 p-0">
+                                <form id="myForm" action="https://dinamoapi.onrender.com/queja/" method="POST">
+                                    <textarea rows="5" cols="68" id="myTextarea" placeholder="Describa su queja o reclamo" required></textarea>
+                                    <button type="submit" class="btn btn-style-1">Enviar</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="row m-0 p-0 justify-content-center">
+        <div class="col-md-1 col-6 m-0 p-12">
+            <select name="select" id="opciones"></select>
+        </div>
+    </div>
+    <div class="row text-center m-0 p-0 estilo-titulo">
+        <div class="col-12 m-10 p-10">
+            <div class="row m-0 p-0 align-items-center justify-content-center">
+                <p>
+                <div class="col-md-1 col-6 m-0 p-0">
+                        <button type="button" onclick="redireccionar()" class="btn btn-style-1">Atras</button>
+                </div>
+                </p>
+            </div>
+        </div>   
+    </div>
+
+    
+</body> <footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.5.8/swiper-bundle.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        const selectElement = document.getElementById('opciones');
+
+        fetch('https://dinamoapi.onrender.com/sucursal/') // Reemplaza la URL con la ruta correspondiente a tu API
+        .then(response => response.json())
+        .then(data => {
+        data.forEach(opcion => {
+            const optionElement = document.createElement('option');
+            optionElement.value = opcion.id;
+            optionElement.text = opcion.nombre;
+            selectElement.add(optionElement);
+            });
+        })
+        .catch(error => console.error(error));
+    </script>
+    <script>
+        function redireccionar() {
+            var rol = localStorage.getItem('rol');
+        
+            if (rol === 'Vendedor') {
+                window.location.href = 'indexVendedor.html';
+            } else if (rol === 'Cliente') {
+                window.location.href = 'index2.html';
+            } else {
+            window.location.href = 'index.html';
+            }
+        }
+    </script>
+
+<script>
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Evita el envío predeterminado del formulario
+
+    var asunto = document.getElementById('asunto').value;
+    var id = document.getElementById('id').value;
+    var descripcion = document.getElementById('myTextarea').value;
+
+    // Actualiza el objeto FormData con los valores adicionales
+    var formData = new FormData(event.target);
+        formData.append('asunto', asunto);
+        formData.append('cliente', id);
+        formData.append('descripcion', descripcion);
+
+    // Realiza la solicitud POST utilizando fetch
+    fetch(event.target.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(function(response) {
+        if (response.ok) {
+            alert('Queja enviada exitosamente');
+            redireccionar(); // Ejecuta la función de redireccionamiento
+        } else {
+            alert('Error al enviar la queja');
+        }
+    })
+    .catch(function(error) {
+        alert('Error al enviar la queja');
+    });
+    });
+</script>
+</footer>
+</html>

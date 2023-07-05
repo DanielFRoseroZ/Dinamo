@@ -1,0 +1,152 @@
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="resources/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.5.8/swiper-bundle.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body style="background-color:#19191f">
+    
+    <div class="row text-center m-0 p-0 estilo-titulo">
+        <div class="col-12 m-0 p-0">
+            <div class="row m-0 p-0 align-items-left justify-content-left">
+                <div class="col-md-2 col-12 m-0 p-0">
+                    <img src="resources/Logo.png" title="" alt="" class="img-fluid w-100">
+                </div>
+            </div>
+        </div>   
+    </div>
+
+    <div class="row m-0 p-0 bg-landing justify-content-center">
+        <div class="col-12 m-0 p-0 estilo-1">
+            <div class="row m-0 p-0">
+                <p class="text-center estilo-dinamo-3 text-center my-4">
+                    <strong>Registrarse</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row m-10 p-10 bg-landing justify-content-center">
+        <div class="col-md-2 col-8 m-0 p-0 estilo-1">
+            <div class="row m-10 p-10">
+                <p class="text-left estilo-dinamo-3 text-left my-5">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" name="name" required
+                    minlength="3" maxlength="20" size="30">
+                    <label for="ID">C.C o ID:</label>
+                    <input type="text" id="id" inputmode="numeric" pattern="\d*" required
+                    minlenght="2" maxlenght="10" size="30">
+                    <label for="cel">Teléfono:</label>
+                    <input type="text" id="tel" inputmode="numeric" pattern="\d*" required
+                    min="10" max="20" size="30">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" id="dir" name="dir" required
+                    minlength="3" maxlength="30" size="30">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required
+                    pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" size="30">
+                    <label for="pass1">Contraseña:</label>
+                    <input type="password" id="pass1" minlength="8" maxlength="20" placeholder="8 a 20 caracteres" required
+                    size="30">
+                    <label for="pass2">Confirmar Contraseña:</label>
+                    <input type="password" id="pass2" minlength="8" maxlength="20" placeholder="8 a 20 caracteres" required
+                    size="30">
+                    <div class="row m-10 p-10">
+                        <select name="select" id="opciones"></select>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center m-0 p-0 estilo-titulo">
+        <div class="col-12 m-10 p-10">
+            <div class="row m-0 p-0 align-items-center justify-content-center">
+                <p>
+                <div class="col-md-1 col-6 m-0 p-0">
+                    <a href ="index.html">
+                        <button type="button" class="btn btn-style-1">Atras</button>
+                    </a>
+                </div>
+                <div class="col-md-1 col-6 m-0 p-0">
+                        <button type="button" onclick="registrarUsuario()" class="btn btn-style-1">Registrar</button>
+                </div>
+            </p>
+            </div>
+        </div>   
+    </div>
+
+    
+</body> <footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.5.8/swiper-bundle.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        const selectElement = document.getElementById('opciones');
+
+        fetch('https://dinamoapi.onrender.com/sucursal/') 
+        .then(response => response.json())
+        .then(data => {
+        data.forEach(opcion => {
+            const optionElement = document.createElement('option');
+            optionElement.value = opcion.id;
+            optionElement.text = opcion.nombre;
+            selectElement.add(optionElement);
+            });
+        })
+        .catch(error => console.error(error));
+    </script>
+
+    <script>
+        function registrarUsuario() {
+            const cedula = document.getElementById('id').value;
+            const nombre = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const telefono = document.getElementById('tel').value;
+            const direccion = document.getElementById('dir').value;
+            const contrasena = document.getElementById('pass1').value;
+            const confirmarContrasena = document.getElementById('pass2').value;
+            const opcion = document.getElementById('opciones').value;
+
+            if (contrasena !== confirmarContrasena) {
+        // Mostrar mensaje de error
+                alert("Las contraseñas no coinciden. Por favor, verifíquelas.");
+            return; // Detener la ejecución de la función si las contraseñas no coinciden
+            }
+
+            const usuario = {
+                cedula: cedula,
+                nombre: nombre,
+                username: email,
+                telefono: telefono,
+                direccion: direccion,
+                password: contrasena,
+                estado: 1,
+                rol: 1,
+                sucursal: opcion
+            };
+            console.log(JSON.stringify(usuario));
+        fetch('https://dinamoapi.onrender.com/usuario/', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+        },
+            body: JSON.stringify(usuario)
+            })
+        .then(response => response.json())
+        .then(data => {
+        console.log(data);
+        window.location.href = "index.html";
+        alert("Registro exitoso");
+        })
+        .catch(error => console.error(error));
+        }
+    </script> 
+</footer>
+</html>

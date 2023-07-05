@@ -1,0 +1,163 @@
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="resources/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.5.8/swiper-bundle.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body style="background-color:#19191f">
+    
+    <div class="row text-center m-0 p-0 estilo-titulo">
+        <div class="col-12 m-0 p-0">
+            <div class="row m-0 p-0 align-items-center justify-content-left">
+                <div class="col-md-2 col-12 m-0 p-0">
+                    <img src="resources/Logo.png" title="" alt="" class="img-fluid w-100">
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="row m-0 p-0 bg-landing justify-content-center">
+        <div class="col-12 m-0 p-0 estilo-1">
+            <div class="row m-0 p-0">
+                <p class="text-center estilo-dinamo-3 text-center my-4">
+                    <strong> Buscar Usuario</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row m-0 p-0 bg-landing justify-content-center">
+        <div class="col-md-3 col-12 m-0 p-0 estilo-1">
+            <div class="row m-0 p-0">
+                <div class="col-12 m-0 p-0">
+                    <p class="text-left estilo-dinamo-3 text-center my-5">
+                        <label for="ID">C.C o ID:</label>
+                        <input type="text" id="idUsuario" inputmode="numeric" pattern="\d*" required
+                        minlenght="2" maxlenght="20" size="30">
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center m-0 p-0 estilo-titulo">
+        <div class="col-12 m-10 p-10">
+            <div class="row m-0 p-0 align-items-center justify-content-center">
+                <p>
+                <div class="col-md-1 col-6 m-0 p-0">
+                        <button type="button" onclick="redireccionar()" class="btn btn-style-1">Atras</button>
+                </div>
+                <div class="col-md-1 col-6 m-0 p-0">
+                    <button type="button" onclick="buscarUsuario()" class="btn btn-style-1">Buscar</button>
+                </div>
+                </p>
+            </div>
+        </div>   
+    </div>
+
+    <div class="row text-center estilo-dinamo-3 m-0 p-0">
+        <div id="resultado"></div>
+    </div>
+    
+
+    
+</body> <footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.5.8/swiper-bundle.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <script>
+        function redireccionar() {
+            var rol = localStorage.getItem('rol');
+        
+            if (rol === 'Vendedor') {
+                window.location.href = 'indexVendedor.html';
+            } else if (rol === 'Cliente') {
+                window.location.href = 'index2.html';
+            } else if (rol === 'Manager') {
+                window.location.href = 'indexManager.html';
+            } else {
+            window.location.href = 'index.html';
+            }
+        }
+    </script>
+
+<script>
+    function buscarUsuario() {
+        const idUsuario = document.getElementById('idUsuario').value;
+        const url = `https://dinamoapi.onrender.com/usuario/?cedula=${idUsuario}`;
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const resultadoUl = document.getElementById('resultado');
+
+            // Limpiar el resultado anterior
+            resultadoUl.innerHTML = '';
+
+            if (data.length === 0) {
+                const mensajeLi = document.createElement('li');
+                mensajeLi.textContent = 'No se encontró ningún usuario.';
+                resultadoUl.appendChild(mensajeLi);
+            } else {
+                const usuario = data.find(usuario => usuario.cedula === idUsuario);
+                if (usuario) {
+            const usuarioLi = document.createElement('li');
+            let rolTexto = '';
+            switch (usuario.rol) {
+            case 1:
+                rolTexto = 'Cliente';
+                break;
+            case 2:
+                rolTexto = 'Jefe de Taller';
+                break;
+            case 4:
+                rolTexto = 'Vendedor';
+                break;
+            case 5:
+                rolTexto = 'Manager';
+                break;
+            default:
+                rolTexto = 'Sin asignar';
+                break;
+            }
+
+            let estadoTexto = '';
+            switch (usuario.estado) {
+            case 1:
+                estadoTexto = 'Activo';
+                break;
+            case 3:
+                estadoTexto = 'Muerto';
+                break;
+            case 4:
+                estadoTexto = 'activo';
+                break;
+            default:
+                estadoTexto = 'Desconocido';
+                break;
+            }
+
+
+            usuarioLi.textContent = `ID: ${usuario.cedula} - Nombre: ${usuario.nombre} - Email: ${usuario.username} - Teléfono: ${usuario.telefono} - Dirección: ${usuario.direccion} - Estado: ${estadoTexto} - Rol: ${rolTexto}`;
+            resultadoUl.appendChild(usuarioLi);
+            } else {
+            const mensajeLi = document.createElement('li');
+            mensajeLi.textContent = 'No se encontró ningún usuario con ese ID.';
+            resultadoUl.appendChild(mensajeLi);
+            }
+        }
+        })
+        .catch(error => console.error(error));
+}
+
+</script>
+</footer>
+</html>
